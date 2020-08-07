@@ -1,0 +1,31 @@
+# docker-compose config for local development
+version: '3'
+
+services:
+  worker:
+    container_name: tyazhko-worker-local
+    command: uvicorn tyazhko.worker:app --host 0.0.0.0 --port 4300 --workers 3 --limit-concurrency 10 --reload
+    restart: always
+    build:
+      context: ./
+      dockerfile: deploy/dockerfiles/local.dockerfile
+    volumes:
+    - ./:/tyazhko
+    depends_on:
+      - db
+    expose:
+      - 4300
+    ports:
+      - 4300:4300
+    env_file:
+      - .env
+
+  db:
+    container_name: tyazhko-mongodb-local
+    image: mongo:4.2-bionic
+    command: mongod --port 20017
+    restart: always
+    ports:
+      - 20017:20017
+    env_file:
+      - .env
