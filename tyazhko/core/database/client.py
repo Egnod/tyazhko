@@ -10,9 +10,10 @@ class Mongo:
     _PASSWORD = configurator.get_config("database_password")
     _HOST = configurator.get_config("database_host")
     _PORT = configurator.get_config("database_port")
-    _NAME = configurator.get_config("database_name")
+    _NAME = configurator.get_config("database_name", "")
+    _PARAMS = configurator.get_config("database_params", "")
 
-    _MONGO_DATABASE_URI = f"mongodb://{_USER}:{_PASSWORD}@{_HOST}:{_PORT}"
+    _MONGO_DATABASE_URI = f"mongodb://{_USER}:{_PASSWORD}@{_HOST}:{_PORT}/{_NAME}{_PARAMS}"
 
     def __init__(self):
         self._client = motor_asyncio.AsyncIOMotorClient(
