@@ -94,7 +94,7 @@ python-versions = ">=3.6.1"
 version = "3.2.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Composable command line interface toolkit"
 name = "click"
 optional = false
@@ -200,7 +200,7 @@ setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
 name = "h11"
 optional = false
@@ -208,7 +208,7 @@ python-versions = "*"
 version = "0.9.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "A collection of framework independent HTTP protocol utils."
 marker = "sys_platform != \"win32\" and sys_platform != \"cygwin\" and platform_python_implementation != \"PyPy\""
 name = "httptools"
@@ -546,7 +546,7 @@ python-versions = ">=3.5"
 version = "3.1.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "The lightning-fast ASGI server."
 name = "uvicorn"
 optional = false
@@ -564,7 +564,7 @@ websockets = ">=8.0.0,<9.0.0"
 watchgodreload = ["watchgod (>=0.6,<0.7)"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Fast implementation of asyncio event loop on top of libuv"
 marker = "sys_platform != \"win32\" and sys_platform != \"cygwin\" and platform_python_implementation != \"PyPy\""
 name = "uvloop"
@@ -607,7 +607,7 @@ python-versions = "*"
 version = "0.2.5"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 name = "websockets"
 optional = false
@@ -627,7 +627,7 @@ version = "1.0.1"
 dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
 
 [metadata]
-content-hash = "be7128930dd8aebf23e7267902dae7e8415d297e6a527eed581faa0c643b0446"
+content-hash = "02af4f2fdf13c34dd7a795535dc8093a530a0cf7a4f6cf774f60e52dfab324d3"
 lock-version = "1.0"
 python-versions = "^3.8"
 

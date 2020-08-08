@@ -3,7 +3,6 @@ from typing import Any, List, Optional, Union
 
 import cbor2
 from bson import ObjectId
-from cryptography.fernet import Fernet
 from passlib.hash import argon2
 
 from tyazhko.core.database.client import mongo_db
