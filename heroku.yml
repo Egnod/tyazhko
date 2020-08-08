@@ -1,5 +1,5 @@
 build:
   docker:
-    web: Dockerfile
+    web: staging.dockerfile
 run:
   web: uvicorn tyazhko.worker:app --host 0.0.0.0 --port $PORT --workers 3 --limit-concurrency 10 --reload
