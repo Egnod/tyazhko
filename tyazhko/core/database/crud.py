@@ -1,12 +1,10 @@
 import abc
-from typing import Any, List, Optional, Union
+from typing import Union
 
-import cbor2
 from bson import ObjectId
 from passlib.hash import argon2
 
 from tyazhko.core.database.client import mongo_db
-from tyazhko.core.exceptions import GnosisCryptoKeyError
 
 
 class BaseMongoCRUD(abc.ABC):
@@ -70,63 +68,6 @@ class BaseMongoCRUD(abc.ABC):
     @classmethod
     async def aggregate(cls, pipeline: list, **kwargs):
         return [i async for i in cls.db[cls.collection].aggregate(pipeline, **kwargs)]
-
-    @classmethod
-    def get_crypto_context(cls, key: bytes) -> Fernet:
-        try:
-            return Fernet(key)
-        except Exception:
-            raise GnosisCryptoKeyError()
-
-    @classmethod
-    def encrypt_fields(
-        cls, data: dict, key: Optional[str], fields: Optional[List[str]] = None
-    ) -> dict:
-        data = data.copy()
-        fields = fields if fields is not None else data.keys()
-
-        for field in fields:
-            data[field] = (
-                cls.encrypt_data(key, data.get(field)) if key else data.get(field)
-            )
-
-        return data
-
-    @classmethod
-    def decrypt_fields(
-        cls, data: dict, key: Optional[str], fields: Optional[List[str]]
-    ) -> dict:
-        data = data.copy()
-        fields = fields if fields is not None else data.keys()
-
-        for field in fields:
-            data[field] = (
-                cls.decrypt_data(key, data.get(field)) if key else data.get(field)
-            )
-
-        return data
-
-    @classmethod
-    def encrypt_data(cls, key: str, data: Any) -> bytes:
-        data = cbor2.dumps(data)
-
-        try:
-            crypto_context = cls.get_crypto_context(key.encode())
-
-            return crypto_context.encrypt(data)
-        except Exception:
-            raise GnosisCryptoKeyError()
-
-    @classmethod
-    def decrypt_data(cls, key: str, encrypted_data: bytes) -> Any:
-        try:
-            crypto_context = cls.get_crypto_context(key.encode())
-
-            data = crypto_context.decrypt(encrypted_data)
-        except Exception:
-            raise GnosisCryptoKeyError()
-
-        return cbor2.loads(data)
 
     @classmethod
     async def check_hash(cls, secret_hash: str, secret: str) -> bool:
