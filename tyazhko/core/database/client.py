@@ -13,7 +13,9 @@ class Mongo:
     _NAME = configurator.get_config("database_name", "")
     _PARAMS = configurator.get_config("database_params", "")
 
-    _MONGO_DATABASE_URI = f"mongodb://{_USER}:{_PASSWORD}@{_HOST}:{_PORT}/{_NAME}{_PARAMS}"
+    _MONGO_DATABASE_URI = (
+        f"mongodb://{_USER}:{_PASSWORD}@{_HOST}:{_PORT}/{_NAME}{_PARAMS}"
+    )
 
     def __init__(self):
         self._client = motor_asyncio.AsyncIOMotorClient(

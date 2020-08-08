@@ -11,6 +11,7 @@ def set_middlewares(app: FastAPI) -> FastAPI:
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        allow_origins=["*"],
     )
 
     logger.info("Set middlewares complete")
