@@ -47,6 +47,7 @@ async def get_link(request: Request, short_id: str = Path(...)):
         "headers": dict(request.headers),
         "cookies": dict(request.cookies),
         "host": dict(request.client._asdict()),
+        "getted_at": datetime.now()
     }
 
     link["getter_info"].append(getter_info)
