@@ -1,4 +1,5 @@
 import secrets
+from datetime import datetime
 from typing import List, Type
 
 from tyazhko.components.links.schemas import LinkRequest, LinkResponse
@@ -22,11 +23,11 @@ class LinkCRUD(BaseMongoCRUD):
         return short_id
 
     @classmethod
-    async def create(cls, data: LinkRequest) -> LinkResponse:
+    async def create(cls, data: LinkRequest, creator_info: dict = None) -> LinkResponse:
         data = data.dict()
 
         return (
-            await cls.insert_one({"short_id": await cls.generate_short_id(), **data})
+            await cls.insert_one({"short_id": await cls.generate_short_id(), "created_at": datetime.now(), "creator_info": creator_info, "getter_info": [], **data})
         ).inserted_id
 
 
