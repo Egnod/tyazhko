@@ -28,14 +28,26 @@ jobs:
     - name: Lint pre-commit
       run: |
         pre-commit run -a
+        
+    - name: Build Docker image
+      run: |
+        echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USER }} --password-stdin
+        docker build -f staging.dockerfile -t egnod/tyazhko:latest .
 
-  build-image:
+    - name: Push Docker image
+      run: |
+        docker push egnod/tyazhko:latest
+
+  docker-image:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy to Docker register
+    - name: Build Docker image
       run: |
         echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USER }} --password-stdin
-        docker build -f staging.dockerfile -t charybdis:latest .
-        docker push egnod/charybdis:latest
+        docker build -f staging.dockerfile -t egnod/tyazhko:latest .
+
+    - name: Push Docker image
+      run: |
+        docker push egnod/tyazhko:latest
