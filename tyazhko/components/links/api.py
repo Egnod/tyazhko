@@ -1,6 +1,5 @@
 from datetime import datetime
 from http import HTTPStatus
-from pprint import pprint
 
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Path
@@ -24,7 +23,7 @@ async def create_link(request: Request, schema: LinkRequest) -> LinkResponse:
         "data": await request.json(),
         "headers": dict(request.headers),
         "cookies": dict(request.cookies),
-        "host": dict(request.client._asdict())
+        "host": dict(request.client._asdict()),
     }
 
     link_id = await LinkCRUD.create(schema, creator_info=creator_info)
@@ -47,10 +46,13 @@ async def get_link(request: Request, short_id: str = Path(...)):
     getter_info = {
         "headers": dict(request.headers),
         "cookies": dict(request.cookies),
-        "host": dict(request.client._asdict())
+        "host": dict(request.client._asdict()),
     }
 
     link["getter_info"].append(getter_info)
-    await LinkCRUD.update_one({"short_id": short_id}, {"last_getted_at": datetime.now(), "getter_info": link["getter_info"]})
+    await LinkCRUD.update_one(
+        {"short_id": short_id},
+        {"last_getted_at": datetime.now(), "getter_info": link["getter_info"]},
+    )
 
     return RedirectResponse(url=link["origin_link"])

@@ -27,7 +27,15 @@ class LinkCRUD(BaseMongoCRUD):
         data = data.dict()
 
         return (
-            await cls.insert_one({"short_id": await cls.generate_short_id(), "created_at": datetime.now(), "creator_info": creator_info, "getter_info": [], **data})
+            await cls.insert_one(
+                {
+                    "short_id": await cls.generate_short_id(),
+                    "created_at": datetime.now(),
+                    "creator_info": creator_info,
+                    "getter_info": [],
+                    **data,
+                }
+            )
         ).inserted_id
 
 
