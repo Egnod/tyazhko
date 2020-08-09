@@ -37,3 +37,15 @@ jobs:
     - name: Push Docker image
       run: |
         docker push egnod/tyazhko:latest
+
+    - name: Update server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd ${{ secrets.TARGET_PATH }}
+          docker-compose pull back
+          docker-compose restart back
