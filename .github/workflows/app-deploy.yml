@@ -50,4 +50,4 @@ jobs:
           pip3 install docker-compose
           cd ${{ secrets.TARGET_PATH }}
           docker-compose pull back
-          docker-compose restart back
+          docker-compose up -d --force-recreate back
