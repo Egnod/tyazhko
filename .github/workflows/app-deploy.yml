@@ -1,4 +1,4 @@
-name: Gnosis APP
+name: Tyazhko APP
 
 on:
   push:
@@ -28,3 +28,8 @@ jobs:
     - name: Lint pre-commit
       run: |
         pre-commit run -a
+    - name: Deploy to Docker register
+      run: |
+        docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_TOKEN
+        docker build -f staging.dockerfile -t charybdis:latest .
+        docker push egnod/charybdis:latest
