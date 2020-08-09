@@ -47,6 +47,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
+          pip3 install docker-compose
           cd ${{ secrets.TARGET_PATH }}
           docker-compose pull back
           docker-compose restart back
